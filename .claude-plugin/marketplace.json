@@ -1,0 +1,11 @@
+{
+  "name": "lit-skills",
+  "owner": { "name": "Shakil Mansuri" },
+  "plugins": [
+    {
+      "name": "lit-skills",
+      "source": "./",
+      "description": "Lit and Lit + Redux skills: lit-doctor and lit-redux-doctor."
+    }
+  ]
+}

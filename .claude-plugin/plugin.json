@@ -1,0 +1,8 @@
+{
+  "name": "lit-skills",
+  "description": "Claude Code skills for Lit web components and Lit + Redux: version-aware lifecycle fixes, reselect memo truths, and probes that count renders and stateChanged calls.",
+  "version": "0.1.0",
+  "author": { "name": "Shakil Mansuri" },
+  "license": "MIT",
+  "keywords": ["lit", "lit-element", "web-components", "redux", "reselect", "pwa-helpers", "performance"]
+}
