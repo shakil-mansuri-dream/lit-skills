@@ -15,12 +15,12 @@ graders:
   - name: reselect-5-facts
     type: llm
     criteria: >
-      The answer says no per-instance selector factory is needed because reselect 5's default
-      weakMapMemoize keeps one cache entry per argument combination, so cards sharing
-      selectCardTitle(state, id) do not evict each other. It also says memoizeOptions maxSize
-      is ignored by weakMapMemoize on reselect 5.0-5.2 (5.3+ only bounds primitive-argument
-      entries). It FAILS if it says the shared selector has a cache size of 1, thrashes across
-      ids, or recommends the factory or maxSize as the fix for this repo.
+      Judge only the recommendation for THIS repo, which is on reselect 5. Mentions of how
+      reselect 4.x behaves are background and never a reason to fail. PASS when the answer
+      (1) advises against adding a per-instance selector factory, because reselect 5's
+      weakMapMemoize caches each (state, id) combination separately, and (2) says
+      memoizeOptions maxSize has no effect on 5.0-5.2. FAIL only when the answer tells this
+      repo to add the factory or to add maxSize.
   - name: skill-fired
     type: tool_used
     tool: Skill

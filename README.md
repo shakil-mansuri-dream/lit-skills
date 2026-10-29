@@ -45,12 +45,12 @@ and without the plugin (`claude plugin eval`), and an LLM judge grades the answe
 
 | Case | What it checks | Sonnet with | Sonnet without |
 |---|---|---|---|
-| `reselect5-shared-selector` | Knows reselect 5 does not need a per-instance selector, and that `maxSize` is ignored on 5.0–5.2 | 1.00 | 0.00 |
+| `reselect5-shared-selector` | Knows reselect 5 does not need a per-instance selector, and that `maxSize` is ignored on 5.0–5.2 | 1.00 (6 runs) | 0.17 (6 runs) |
 | `slow-click-measure-first` | Counts `stateChanged` calls and renders before blaming re-renders | 1.00 | 0.00 |
 | `le2-derived-state` | Derives state in `update()`, not `willUpdate`, on lit-element 2 | 1.00 | 1.00 |
 | `le2-stale-prop` | Recomputes store data when a property changes, in a single render | 1.00 | 1.00 |
 
-These scores come from 2 runs per arm on 29 Oct 2026. Sonnet already gets the two lit-element 2
+These scores come from 2 runs per arm on 29 Oct 2026, except where noted. Sonnet already gets the two lit-element 2
 cases right without help, and they stay in the suite as regression checks.
 
 How often the skills start on their own (3 runs per case, 29 Oct 2026):
