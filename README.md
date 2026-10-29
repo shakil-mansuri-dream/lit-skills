@@ -51,8 +51,14 @@ and without the plugin (`claude plugin eval`), and an LLM judge grades the answe
 | `le2-stale-prop` | Recomputes store data when a property changes, in a single render | 1.00 | 1.00 |
 
 These scores come from 2 runs per arm on 29 Oct 2026. Sonnet already gets the two lit-element 2
-cases right without help, and they stay in the suite as regression checks. Haiku seldom calls
-skills on its own, so its with and without scores were the same.
+cases right without help, and they stay in the suite as regression checks.
+
+How often the skills start on their own (3 runs per case, 29 Oct 2026):
+
+| Model | No hint | With the CLAUDE.md line below |
+|---|---|---|
+| Sonnet | 12 / 12 | not needed |
+| Haiku | 1 / 12 | 12 / 12, all cases pass |
 
 Run them yourself:
 
@@ -77,6 +83,12 @@ Or copy the folders by hand:
 ```bash
 git clone https://github.com/shakil-mansuri-dream/lit-skills
 cp -r lit-skills/skills/* ~/.claude/skills/
+```
+
+Smaller models seldom reach for a skill on their own. Add one line to your project's `CLAUDE.md`:
+
+```
+This project is built with Lit. For any work on its components, selectors or performance, use the lit-doctor and lit-redux-doctor skills.
 ```
 
 ## How they were made

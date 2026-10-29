@@ -1,6 +1,6 @@
 ---
 name: lit-redux-doctor
-description: Use when Lit or LitElement components read a Redux store (pwa-helpers `connect`, `stateChanged`, reselect `createSelector`) and show stale data after a property change, re-render on unrelated dispatches, feel slow on a click, or when choosing memoize options for reselect.
+description: Use when code uses a Redux store with web components - `connect(store)` from pwa-helpers, a `stateChanged(state)` method, or reselect `createSelector` / `memoizeOptions` / `maxSize` - including selector caching questions, a value that stays stale after a property or id changes, or a click that is slow across many connected elements.
 ---
 
 # Lit + Redux doctor

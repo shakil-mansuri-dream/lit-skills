@@ -1,6 +1,6 @@
 ---
 name: lit-doctor
-description: Use when writing, changing or debugging a Lit, LitElement or lit-element web component - a component that does not update, updates too often, renders `[object Object]`, or a Lit app that feels slow or janky.
+description: Use when editing, reviewing or debugging code that imports lit, lit-element or lit-html - even a small change to one component, a property that is not rendering, a value derived before render, `[object Object]` in a template, shadow DOM lookups in tests, or a slow or janky screen in a web-components app.
 ---
 
 # Lit doctor
