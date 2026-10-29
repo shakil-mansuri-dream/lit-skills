@@ -1,0 +1,25 @@
+schema_version: "1.1"
+name: slow-click-measure-first
+tags: [lit-doctor, lit-redux-doctor, measure]
+execution:
+  prompt: |
+    Bug report: "Selecting one card on a 40-card board takes about 100ms. Every card is a card-view."
+    What do you do first, and what is your fix? Do not edit files. Under 250 words.
+  runs: 3
+  max_turns: 15
+  allowed_tools: [Read, Glob, Grep, Skill]
+context:
+  scaffold_script: scaffold.sh
+graders:
+  - name: measure-first
+    type: llm
+    criteria: >
+      Before proposing a code fix, the answer gives a concrete way to count, per component, how
+      many times stateChanged ran and how many times each element rendered during the click
+      (for example a console probe or instrumentation of update/stateChanged), and makes the
+      fix depend on that result. It FAILS if it states as fact, without measuring, that every
+      card re-renders or that re-rendering is the cause.
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?lit-(redux-)?doctor"'

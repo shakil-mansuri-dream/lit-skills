@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: le2-derived-state
+tags: [lit-doctor, version]
+execution:
+  prompt: |
+    In src/components/price-tag.js, show the price as formatted text (e.g. "$12.50" from cents=1250,
+    using `currency`, default "USD") instead of raw cents. Compute the formatted label once per change
+    of cents/currency, not inside render(). Do not edit files: reply with the final code for the file
+    and two lines of reasoning.
+  runs: 3
+  max_turns: 15
+  allowed_tools: [Read, Glob, Grep, Skill]
+context:
+  scaffold_script: scaffold.sh
+graders:
+  - name: lit-element-2-safe
+    type: llm
+    criteria: >
+      The final code derives the label in an override of update(changedProperties) placed before
+      super.update(changedProperties), or in another way that works on lit-element 2.x without an
+      extra render. It FAILS if the label is computed in willUpdate (never called on lit-element 2)
+      or by setting a reactive property in updated().
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?lit-(redux-)?doctor"'

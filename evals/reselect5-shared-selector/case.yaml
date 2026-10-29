@@ -1,0 +1,27 @@
+schema_version: "1.1"
+name: reselect5-shared-selector
+tags: [lit-redux-doctor, reselect]
+execution:
+  prompt: |
+    "Each <card-view> shares one selectCardTitle selector. Should each card-view create its own
+    selector instance (a factory in the constructor) so the cache stops thrashing? Should we also add
+    memoizeOptions: { maxSize: 50 }?" Answer for this repo, in under 150 words.
+  runs: 3
+  max_turns: 15
+  allowed_tools: [Read, Glob, Grep, Skill]
+context:
+  scaffold_script: scaffold.sh
+graders:
+  - name: reselect-5-facts
+    type: llm
+    criteria: >
+      The answer says no per-instance selector factory is needed because reselect 5's default
+      weakMapMemoize keeps one cache entry per argument combination, so cards sharing
+      selectCardTitle(state, id) do not evict each other. It also says memoizeOptions maxSize
+      is ignored by weakMapMemoize on reselect 5.0-5.2 (5.3+ only bounds primitive-argument
+      entries). It FAILS if it says the shared selector has a cache size of 1, thrashes across
+      ids, or recommends the factory or maxSize as the fix for this repo.
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?lit-(redux-)?doctor"'

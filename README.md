@@ -38,6 +38,31 @@ scProbe.reset();   /* click */  scProbe.report();
 That pair of numbers (40 `stateChanged` calls, 1 render) tells you to make `stateChanged`
 cheaper, not to chase renders.
 
+## Evals
+
+`evals/` holds four cases that run against a small lit-element 2 + Redux app. Each case runs with
+and without the plugin (`claude plugin eval`), and an LLM judge grades the answer.
+
+| Case | What it checks | Sonnet with | Sonnet without |
+|---|---|---|---|
+| `reselect5-shared-selector` | Knows reselect 5 does not need a per-instance selector, and that `maxSize` is ignored on 5.0–5.2 | 1.00 | 0.00 |
+| `slow-click-measure-first` | Counts `stateChanged` calls and renders before blaming re-renders | 1.00 | 0.00 |
+| `le2-derived-state` | Derives state in `update()`, not `willUpdate`, on lit-element 2 | 1.00 | 1.00 |
+| `le2-stale-prop` | Recomputes store data when a property changes, in a single render | 1.00 | 1.00 |
+
+These scores come from 2 runs per arm on 29 Oct 2026. Sonnet already gets the two lit-element 2
+cases right without help, and they stay in the suite as regression checks. Haiku seldom calls
+skills on its own, so its with and without scores were the same.
+
+Run them yourself:
+
+```bash
+claude plugin eval --scaffold --model sonnet
+```
+
+`--scaffold` runs each case's `scaffold.sh`, which writes the sample app into a throwaway
+folder. Read the script before passing the flag.
+
 ## Install
 
 As a Claude Code plugin:

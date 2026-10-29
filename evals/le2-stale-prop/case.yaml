@@ -1,0 +1,25 @@
+schema_version: "1.1"
+name: le2-stale-prop
+tags: [lit-redux-doctor, version]
+execution:
+  prompt: |
+    Bug report: "On mobile we reuse one <card-view> and only change its cardId attribute. It keeps
+    showing the previous card's title until something else changes in the store." Fix
+    src/components/card-view.js. Do not edit files: reply with the code change and two lines of reasoning.
+  runs: 3
+  max_turns: 15
+  allowed_tools: [Read, Glob, Grep, Skill]
+context:
+  scaffold_script: scaffold.sh
+graders:
+  - name: recompute-before-render
+    type: llm
+    criteria: >
+      The fix recomputes the title when cardId changes, in an override of update(changed)
+      before super.update(changed) or another lit-element-2-compatible way that renders once.
+      It FAILS if it relies on willUpdate (never called on lit-element 2), or only recomputes
+      in updated() without saying that this renders twice.
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?lit-(redux-)?doctor"'
